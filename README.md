@@ -27,6 +27,7 @@ a hour.
 - Bild angekommen nachricht aggregieren, wenn mehrer Bilder nacheinander kommen
 - Dateiendung auf JPG statt JPE ändern (Prio A)
 - Automatisch nach Tagen in Ordner legen, wenn mehr als X Bilder für diesen Tag
+- Reject files larger than 20MB immediately without downloading (Prio A)
 
 ## Feature Requests ImagePreview
 
