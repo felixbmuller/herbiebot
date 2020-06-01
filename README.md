@@ -25,10 +25,10 @@ a hour.
 
 - Bei Bildern Bot-Auswahlmenü als Antwort, ob das Bild trotzdem gespeichert werden soll
 - Bild angekommen nachricht aggregieren, wenn mehrer Bilder nacheinander kommen
-- Dateiendung auf JPG statt JPE ändern (Prio A)
+- ~~Dateiendung auf JPG statt JPE ändern (Prio A)~~
 - Automatisch nach Tagen in Ordner legen, wenn mehr als X Bilder für diesen Tag
-- Reject files larger than 20MB immediately without downloading (Prio A)
+- ~~Reject files larger than 20MB immediately without downloading (Prio A)~~
 
 ## Feature Requests ImagePreview
 
-- Convert files ending with JPE too (Prio A)
+- ~~Convert files ending with JPE too (Prio A)~~

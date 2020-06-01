@@ -30,6 +30,7 @@ FILE_ENDINGS_TO_CONVERT = [
     ".cr2",
     ".jpg",
     ".jpeg",
+    ".jpe",
 ]
 
 def process_directory(path):

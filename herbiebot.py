@@ -25,10 +25,16 @@ def extract_file_id(msg):
     was_document = True
     file_id_to_download = None
     file_ending = None
+    file_size = None
 
     if msg.document is not None:
         file_id_to_download = msg.document.file_id
         file_ending = mimetypes.guess_extension(msg.document.mime_type)
+        if file_ending == ".jpe":
+            # nobody uses jpe!
+            file_ending = ".jpg"
+        file_size = msg.document.file_size
+
     elif msg.photo:
         # photo messages contain the photos in multiple resolutions -> use the best
         max_width = -1
@@ -36,10 +42,14 @@ def extract_file_id(msg):
             if photo.width > max_width:
                 max_width = photo.width
                 file_id_to_download = photo.file_id
+                file_size = photo.file_size
         was_document = False
 
     if file_ending is None:
         file_ending = ".jpg"
+
+    if file_size is None:
+        file_size = 0
 
     # extract sender user name for naming the file later
     if msg.forward_from is not None:
@@ -52,7 +62,7 @@ def extract_file_id(msg):
     logger.info(f"Captured message: file_id={file_id_to_download}, "
                 f"was_document={was_document}, file_ending={file_ending}, sender={sender})")
     
-    return file_id_to_download, was_document, file_ending, sender
+    return file_id_to_download, was_document, file_ending, sender, file_size
 
 def download_and_save_file(bot, file_id, save_dir, source_username, file_ending):
     """
@@ -100,14 +110,19 @@ def handle_files(update, context):
     msg = update.message
 
     try:
-        file_id, was_document, file_ending, sender = extract_file_id(msg)
+        file_id, was_document, file_ending, sender, file_size = extract_file_id(msg)
+
         if file_id is None:
-            logger.warn("No file id to download even though a document/picture mail was received")
-        download_and_save_file(context.bot, file_id, SAVE_DIR, sender, file_ending)
-        if was_document:
-            text = "Saved file successfully."
+            raise ValueError("No file id to download even though a document/picture mail was received")
+        elif file_size > 20*1024*1024:
+            text = "Sorry, I cannot handle files larger than 20MB."
+
         else:
-            text = "Saved image successfully. Please consider sending images as files (attachment > file > gallery) for better quality if feasible."
+            download_and_save_file(context.bot, file_id, SAVE_DIR, sender, file_ending)
+            if was_document:
+                text = "Saved file successfully."
+            else:
+                text = "Saved image successfully. Please consider sending images as files (attachment > file > gallery) for better quality if feasible."
         
     except Exception as e:
         logger.error(type(e).__name__ + ": " + str(e))
