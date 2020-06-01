@@ -1,6 +1,6 @@
 # herbiebot
 
-Bot scripts use `argparse`, so just start them with `--help` to find out about
+Both scripts use `argparse`, so just start them with `--help` to find out about
 command line arguments.
 
 ## `herbiebot`
