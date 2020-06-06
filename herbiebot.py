@@ -9,6 +9,7 @@ import mimetypes
 import traceback
 import sys
 import argparse
+import subprocess
 
 logger = logging.getLogger(__name__)
 
@@ -102,6 +103,12 @@ def download_and_save_file(bot, file_id, save_dir, source_username, file_ending)
 
     # small race condition here, but thats okay 
     os.rename(full_path, new_path)
+
+    ret = subprocess.run(["chown", "nobody:nogroup", new_path], capture_output=True, text=True)
+    if ret.returncode != 0:
+        logging.error(f"chown on {new_path} failed with returncode {ret.returncode}. Won't retry.")
+        logger.error(f"STDERR: {ret.stderr}")
+        logger.error(f"STDOUT: {ret.stdout}")
 
 SAVE_DIR = ""
 
