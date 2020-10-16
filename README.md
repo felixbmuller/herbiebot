@@ -5,11 +5,12 @@ command line arguments.
 
 ## `herbiebot`
 
-Simple Telegram Bot to send pictures to a file server.
+Simple Telegram bot to send pictures to a file server.
 
-**Deployment:** Install dependencies (requirements.txt) and start the script 
-in the background (use `screen` to avoid problems when the SSH connection 
-closes).  
+**Deployment:** Install dependencies (`requirements.txt`), set the Telegram 
+bot access token as environment variable (`HERBIE_ACCESS_TOKEN`) and start 
+the script in the background (use `screen` when using a remote server 
+to avoid problems when the SSH connection closes).
 
 ## `image_preview`
 
@@ -20,15 +21,3 @@ through all subdirectories too). Also converts raw images to JPEG.
 `nice -n 19`. The script has a locking mechanism to ensure that only one 
 instance runs at a time, so there is no problem if one run takes longer than
 a hour.
-
-## Feature Requests HerbieBot
-
-- Bei Bildern Bot-Auswahlmenü als Antwort, ob das Bild trotzdem gespeichert werden soll
-- Bild angekommen nachricht aggregieren, wenn mehrer Bilder nacheinander kommen
-- ~~Dateiendung auf JPG statt JPE ändern (Prio A)~~
-- Automatisch nach Tagen in Ordner legen, wenn mehr als X Bilder für diesen Tag
-- ~~Reject files larger than 20MB immediately without downloading (Prio A)~~
-
-## Feature Requests ImagePreview
-
-- ~~Convert files ending with JPE too (Prio A)~~
