@@ -165,7 +165,11 @@ def main():
     dispatcher.add_handler(MessageHandler(Filters.photo | Filters.document, handle_files))
     dispatcher.add_handler(MessageHandler(Filters.video, handle_video))
 
-    updater.start_polling()
+    while True:
+        try:
+            updater.start_polling()
+        except Exception as e:
+            logger.error(type(e).__name__ + ": " + str(e))
 
 
 if __name__ == "__main__":
