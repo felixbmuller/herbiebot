@@ -113,6 +113,9 @@ def handle_files(update, context):
     try:
         file_id, was_document, file_ending, sender, file_size = extract_file_id(msg)
 
+        if sender is None:
+            sender = "unknown_sender"
+
         if file_id is None:
             raise ValueError("No file id to download even though a document/picture mail was received")
         elif file_size > 20*1024*1024:
